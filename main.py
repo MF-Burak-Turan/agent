@@ -1,6 +1,5 @@
 import streamlit as st
 import time
-# Burada fonksiyon ismini 'researcher_agent' olarak güncelliyoruz
 from agent_logic import researcher_agent
 
 st.set_page_config(
@@ -11,7 +10,7 @@ st.set_page_config(
 st.markdown("""
 Bu agent, internete bağlanarak gerçek zamanlı araştırma yapar ve bilgileri sentezler.
 * **Beyin:** Google Gemini 2.5 Flash
-* **Arama:** Tavily Search Engine
+* **Arama:** Serper Search Engine
 """)
 
 # Kullanıcı Girişi
@@ -19,7 +18,6 @@ query = st.text_input("Araştırmak istediğiniz konu:", placeholder="Örn: 2025
 
 if st.button("Araştırmayı Başlat", use_container_width=True):
     if query:
-        # Görsel bir ilerleme çubuğu ve spinner
         with st.spinner("Agent interneti tarıyor ve rapor hazırlıyor..."):
             try:
                 start_time = time.time()
@@ -32,12 +30,10 @@ if st.button("Araştırmayı Başlat", use_container_width=True):
                 
                 st.success(f"Araştırma {duration} saniyede tamamlandı!")
                 
-                # Sonucu yazdır
                 st.markdown("---")
                 st.markdown("### 📊 Araştırma Sonucu")
                 st.markdown(report)
                 
-                # İndirme butonu (Opsiyonel ama şık durur)
                 st.download_button(
                     label="Raporu İndir (.txt)",
                     data=report,
@@ -50,6 +46,5 @@ if st.button("Araştırmayı Başlat", use_container_width=True):
     else:
         st.warning("Lütfen bir araştırma konusu girin!")
 
-# Footer
+
 st.markdown("---")
-st.caption("AI Agent Hackathon 2025 - Geliştirici: Burak")
