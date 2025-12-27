@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import time
 import requests
@@ -85,30 +86,16 @@ def researcher_agent(user_query):
     }
 
 if __name__ == "__main__":
-    console = Console()
-    
-    soru = input("\n Araştırmak istediğiniz konuyu girin: ")
-    
-    with console.status("[bold green]Araştırılıyor...", spinner="earth"):
-        result = researcher_agent(soru)
-    
-    console.print("\n[bold cyan]🚀 ARAŞTIRMA TAMAMLANDI[/bold cyan]\n")
+    if sys.platform == "win32":
+        sys.stdout.reconfigure(encoding='utf-8')
 
-    table = Table(title="Agent Bilgileri", show_header=True, header_style="bold magenta")
-    table.add_column("Takım", style="dim")
-    table.add_column("Görev ID")
-    table.add_column("İşlem Süresi")
-    table.add_row(result["team_name"], str(result["task_id"]), result["execution_time"])
-    console.print(table)
-
-    output = result["result_output"]
-    summary_text = f"[bold yellow]Özet:[/bold yellow]\n{output['summary']}\n\n"
-    data_text = f"[bold green]Detaylı Veri:[/bold green]\n{output['data']}"
+    soru = input("Araştırma konusu girin: ")
+    result = researcher_agent(soru)
     
-    console.print(Panel(
-        summary_text + data_text,
-        title="[bold white]Sonuç Çıktısı[/bold white]",
-        border_style="blue",
-        expand=False,
-        padding=(1, 2)
-    ))
+    json_output = json.dumps(result, indent=4, ensure_ascii=False)
+    
+    final_view = json_output.replace("\\n", "\n")
+    
+    print("\n" + "="*50)
+    print(final_view)
+    print("="*50)
