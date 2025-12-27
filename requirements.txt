@@ -4,5 +4,7 @@ langchain-community
 tavily-python
 python-dotenv
 streamlit
+rich
+json
 
 
